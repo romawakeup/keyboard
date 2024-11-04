@@ -9,13 +9,23 @@ class Keyboard {
       ["CapsLock", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'"],
       ["z", "x", "c", "v", "b", " ", "n", "m", ",", ".", "/", "Langs"],
     ];
+    // ДЛЯ ПОЯВЛЕНИЯ КЛАВИАТУРЫ
     this.inputField.addEventListener("focus", () => {
       this.keyboard.style.display = "block";
     });
+    // ДЛЯ СКРЫТИЯ КЛАВИАТУРЫ ПРИ КЛИКЕ НА ЛЮБОЕ СВОБОДНОЕ МЕСТО КРОМЕ ИНПУТА И КЛАВИАТУРЫ
+    // document.addEventListener("click", (item) => {
+    //   if (
+    //     item.target !== this.inputField &&
+    //     !this.keyboard.contains(item.target)
+    //   ) {
+    //     this.keyboard.style.display = "none";
+    //   }
+    // });
 
     this.createKeyboard();
   }
-
+  // ОТРИСОВККА КЛАВИАТУРЫ
   createKeyboard() {
     this.keyboard.innerHTML = "";
 
@@ -27,12 +37,11 @@ class Keyboard {
         const keyElement = document.createElement("div");
         keyElement.classList.add("key");
 
-        if (key === "BackSpace" || key === "CapsLock") {
+        if (key === "BackSpace" && key === "CapsLock") {
           keyElement.classList.add("key-wide");
         } else if (key === " ") {
           keyElement.classList.add("key-space");
         }
-
         keyElement.textContent = key;
         keyElement.addEventListener("click", () => this.handleKeyClick(key));
 
@@ -44,6 +53,7 @@ class Keyboard {
   }
 
   handleKeyClick(key) {
+    // СТИРАЕМ ПОСЛЕДНИЙ СИМВОЛ В ИНПУТЕ
     if (key === "BackSpace") {
       this.inputField.value = this.inputField.value.slice(0, -1);
     } else if (key === "CapsLock") {
